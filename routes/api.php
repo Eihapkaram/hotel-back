@@ -3,11 +3,11 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MaintenanceRequestController;
 use App\Http\Controllers\ProjectController;
-use App\Http\Controllers\ProjectFeatureController;
-use App\Http\Controllers\ProjectImageController;
-use App\Http\Controllers\ProjectInterestController;
-use App\Http\Controllers\ProjectLocationController;
-use App\Http\Controllers\ProjectWarrantyController;
+use App\Http\Controllers\ProjectFeaturesController;
+use App\Http\Controllers\ProjectImagesController;
+use App\Http\Controllers\ProjectInterestsController;
+use App\Http\Controllers\ProjectLocationsController;
+use App\Http\Controllers\ProjectWarrantysController;
 use Illuminate\Support\Facades\Route;
 
 // -------------------------
@@ -49,20 +49,20 @@ Route::get('/projects/{project}', [ProjectController::class, 'show']);
 Route::get('/maintenance-requests', [MaintenanceRequestController::class, 'index']);
 Route::get('/maintenance-requests/{maintenanceRequest}', [MaintenanceRequestController::class, 'show']);
 
-Route::get('/project-images', [ProjectImageController::class, 'index']);
-Route::get('/project-images/{projectImage}', [ProjectImageController::class, 'show']);
+Route::get('/project-images', [ProjectImagesController::class, 'index']);
+Route::get('/project-images/{projectImage}', [ProjectImagesController::class, 'show']);
 
-Route::get('/project-features', [ProjectFeatureController::class, 'index']);
-Route::get('/project-features/{projectFeature}', [ProjectFeatureController::class, 'show']);
+Route::get('/project-features', [ProjectFeaturesController::class, 'index']);
+Route::get('/project-features/{projectFeature}', [ProjectFeaturesController::class, 'show']);
 
-Route::get('/project-warranties', [ProjectWarrantyController::class, 'index']);
-Route::get('/project-warranties/{projectWarranty}', [ProjectWarrantyController::class, 'show']);
+Route::get('/project-warranties', [ProjectWarrantysController::class, 'index']);
+Route::get('/project-warranties/{projectWarranty}', [ProjectWarrantysController::class, 'show']);
 
-Route::get('/project-locations', [ProjectLocationController::class, 'index']);
-Route::get('/project-locations/{projectLocation}', [ProjectLocationController::class, 'show']);
+Route::get('/project-locations', [ProjectLocationsController::class, 'index']);
+Route::get('/project-locations/{projectLocation}', [ProjectLocationsController::class, 'show']);
 
-Route::get('/project-interests', [ProjectInterestController::class, 'index']);
-Route::get('/project-interests/{projectInterest}', [ProjectInterestController::class, 'show']);
+Route::get('/project-interests', [ProjectInterestsController::class, 'index']);
+Route::get('/project-interests/{projectInterest}', [ProjectInterestsController::class, 'show']);
 
 // -------------------------
 // Protected Routes (إنشاء، تعديل، حذف) - Passport
@@ -85,32 +85,32 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('/maintenance-requests/{maintenanceRequest}', [MaintenanceRequestController::class, 'destroy']);
 
     // Project Images
-    Route::post('/project-images', [ProjectImageController::class, 'store']);
-    Route::put('/project-images/{projectImage}', [ProjectImageController::class, 'update']);
-    Route::patch('/project-images/{projectImage}', [ProjectImageController::class, 'update']);
-    Route::delete('/project-images/{projectImage}', [ProjectImageController::class, 'destroy']);
+    Route::post('/project-images', [ProjectImagesController::class, 'store']);
+    Route::put('/project-images/{projectImage}', [ProjectImagesController::class, 'update']);
+    Route::patch('/project-images/{projectImage}', [ProjectImagesController::class, 'update']);
+    Route::delete('/project-images/{projectImage}', [ProjectImagesController::class, 'destroy']);
 
     // Project Features
-    Route::post('/project-features', [ProjectFeatureController::class, 'store']);
-    Route::put('/project-features/{projectFeature}', [ProjectFeatureController::class, 'update']);
-    Route::patch('/project-features/{projectFeature}', [ProjectFeatureController::class, 'update']);
-    Route::delete('/project-features/{projectFeature}', [ProjectFeatureController::class, 'destroy']);
+    Route::post('/project-features', [ProjectFeaturesController::class, 'store']);
+    Route::put('/project-features/{projectFeature}', [ProjectFeaturesController::class, 'update']);
+    Route::patch('/project-features/{projectFeature}', [ProjectFeaturesController::class, 'update']);
+    Route::delete('/project-features/{projectFeature}', [ProjectFeaturesController::class, 'destroy']);
 
     // Project Warranties
-    Route::post('/project-warranties', [ProjectWarrantyController::class, 'store']);
-    Route::put('/project-warranties/{projectWarranty}', [ProjectWarrantyController::class, 'update']);
-    Route::patch('/project-warranties/{projectWarranty}', [ProjectWarrantyController::class, 'update']);
-    Route::delete('/project-warranties/{projectWarranty}', [ProjectWarrantyController::class, 'destroy']);
+    Route::post('/project-warranties', [ProjectWarrantysController::class, 'store']);
+    Route::put('/project-warranties/{projectWarranty}', [ProjectWarrantysController::class, 'update']);
+    Route::patch('/project-warranties/{projectWarranty}', [ProjectWarrantysController::class, 'update']);
+    Route::delete('/project-warranties/{projectWarranty}', [ProjectWarrantysController::class, 'destroy']);
 
     // Project Locations
-    Route::post('/project-locations', [ProjectLocationController::class, 'store']);
-    Route::put('/project-locations/{projectLocation}', [ProjectLocationController::class, 'update']);
-    Route::patch('/project-locations/{projectLocation}', [ProjectLocationController::class, 'update']);
-    Route::delete('/project-locations/{projectLocation}', [ProjectLocationController::class, 'destroy']);
+    Route::post('/project-locations', [ProjectLocationsController::class, 'store']);
+    Route::put('/project-locations/{projectLocation}', [ProjectLocationsController::class, 'update']);
+    Route::patch('/project-locations/{projectLocation}', [ProjectLocationsController::class, 'update']);
+    Route::delete('/project-locations/{projectLocation}', [ProjectLocationsController::class, 'destroy']);
 
     // Project Interests
-    Route::post('/project-interests', [ProjectInterestController::class, 'store']);
-    Route::put('/project-interests/{projectInterest}', [ProjectInterestController::class, 'update']);
-    Route::patch('/project-interests/{projectInterest}', [ProjectInterestController::class, 'update']);
-    Route::delete('/project-interests/{projectInterest}', [ProjectInterestController::class, 'destroy']);
+    Route::post('/project-interests', [ProjectInterestsController::class, 'store']);
+    Route::put('/project-interests/{projectInterest}', [ProjectInterestsController::class, 'update']);
+    Route::patch('/project-interests/{projectInterest}', [ProjectInterestsController::class, 'update']);
+    Route::delete('/project-interests/{projectInterest}', [ProjectInterestsController::class, 'destroy']);
 });

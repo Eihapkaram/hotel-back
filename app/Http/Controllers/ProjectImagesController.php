@@ -6,7 +6,7 @@ use App\Models\ProjectImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class ProjectImageController extends Controller
+class ProjectImagesController extends Controller
 {
     public function index()
     {

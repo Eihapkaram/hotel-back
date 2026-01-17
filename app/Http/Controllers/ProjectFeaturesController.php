@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ProjectFeature;
 use Illuminate\Http\Request;
 
-class ProjectFeatureController extends Controller
+class ProjectFeaturesController extends Controller
 {
     public function index()
     {

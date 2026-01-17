@@ -11,7 +11,7 @@ namespace App\Models {
      * @property bool $unit_received
      * @property mixed $request_type
      * @property string|null $unit
-     * @property mixed $project_id
+     * @property int $project_id
      * @property string|null $email
      * @property string $phone
      * @property string $full_name
@@ -334,10 +334,10 @@ namespace App\Models {
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property string|null $date
-     * @property mixed $area
-     * @property mixed $overview_kitchens
-     * @property mixed $overview_bathrooms
-     * @property mixed $overview_bedrooms
+     * @property int|null $area
+     * @property int|null $overview_kitchens
+     * @property int|null $overview_bathrooms
+     * @property int|null $overview_bedrooms
      * @property string|null $description
      * @property string|null $main_image
      * @property mixed $status
@@ -672,7 +672,7 @@ namespace App\Models {
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property string $feature
-     * @property mixed $project_id
+     * @property int $project_id
      * @property int $id
      * @property-read \App\Models\Project $project
      * @method static \Illuminate\Database\Eloquent\Builder<ProjectFeature>|ProjectFeature whereId($value)
@@ -986,7 +986,7 @@ namespace App\Models {
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property string $image
-     * @property mixed $project_id
+     * @property int $project_id
      * @property int $id
      * @property-read \App\Models\Project $project
      * @method static \Illuminate\Database\Eloquent\Builder<ProjectImage>|ProjectImage whereId($value)
@@ -1304,7 +1304,7 @@ namespace App\Models {
      * @property string|null $email
      * @property string $phone
      * @property string $name
-     * @property mixed $project_id
+     * @property int $project_id
      * @property int $id
      * @property-read \App\Models\Project $project
      * @method static \Illuminate\Database\Eloquent\Builder<ProjectInterest>|ProjectInterest whereId($value)
@@ -1625,7 +1625,7 @@ namespace App\Models {
      * @property string|null $address
      * @property string $district
      * @property string $city
-     * @property mixed $project_id
+     * @property int $project_id
      * @property int $id
      * @property-read \App\Models\Project $project
      * @method static \Illuminate\Database\Eloquent\Builder<ProjectLocation>|ProjectLocation whereId($value)
@@ -1943,7 +1943,7 @@ namespace App\Models {
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property string $duration
      * @property string $warranty_name
-     * @property mixed $project_id
+     * @property int $project_id
      * @property int $id
      * @property-read \App\Models\Project $project
      * @method static \Illuminate\Database\Eloquent\Builder<ProjectWarranty>|ProjectWarranty whereId($value)

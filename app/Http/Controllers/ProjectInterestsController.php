@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ProjectInterest;
 use Illuminate\Http\Request;
 
-class ProjectInterestController extends Controller
+class ProjectInterestsController extends Controller
 {
     public function index()
     {
