@@ -8,11 +8,34 @@ use App\Http\Controllers\ProjectImagesController;
 use App\Http\Controllers\ProjectInterestsController;
 use App\Http\Controllers\ProjectLocationsController;
 use App\Http\Controllers\ProjectWarrantysController;
+use App\Http\Controllers\UnitController;
+use App\Http\Controllers\UnitTypeController;
 use Illuminate\Support\Facades\Route;
 
 // -------------------------
 // imge show
 // -------------------------
+Route::get('/project_features/{filename}', function ($filename) {
+    $path = storage_path('app/public/project_features/'.$filename);
+
+    if (! file_exists($path)) {
+        abort(404, 'Image not found');
+    }
+
+    return response()->file($path);
+})->where('filename', '.*'); // <-- غير 'path' لـ 'filename'
+
+// Route to serve project sub-images
+Route::get('/project-images/files/{path}', function ($path) {
+    $fullPath = storage_path('app/public/'.$path);
+
+    if (! file_exists($fullPath)) {
+        abort(404, 'Image not found.');
+    }
+
+    return response()->file($fullPath);
+})->where('path', '.*');
+
 // Route to serve project main images
 Route::get('/projects/{filename}', function ($filename) {
     $path = storage_path('app/public/projects/'.$filename);
@@ -24,16 +47,6 @@ Route::get('/projects/{filename}', function ($filename) {
     return response()->file($path);
 });
 
-// Route to serve project sub-images
-Route::get('/project-images/files/{filename}', function ($filename) {
-    $path = storage_path('app/public/project_images/'.$filename);
-
-    if (! file_exists($path)) {
-        abort(404, 'Image not found.');
-    }
-
-    return response()->file($path);
-});
 // -------------------------
 // Public Auth
 // -------------------------
@@ -44,7 +57,7 @@ Route::post('/login', [AuthController::class, 'login']);
 // Public Routes (عرض فقط)
 // -------------------------
 Route::get('/projects', [ProjectController::class, 'index']);
-Route::get('/projects/{project}', [ProjectController::class, 'show']);
+Route::get('/project/{project}', [ProjectController::class, 'show']);
 
 Route::get('/maintenance-requests', [MaintenanceRequestController::class, 'index']);
 Route::get('/maintenance-requests/{maintenanceRequest}', [MaintenanceRequestController::class, 'show']);
@@ -113,4 +126,10 @@ Route::middleware('auth:api')->group(function () {
     Route::put('/project-interests/{projectInterest}', [ProjectInterestsController::class, 'update']);
     Route::patch('/project-interests/{projectInterest}', [ProjectInterestsController::class, 'update']);
     Route::delete('/project-interests/{projectInterest}', [ProjectInterestsController::class, 'destroy']);
+
+    // units
+    Route::post('/unit-types', [UnitTypeController::class, 'store']);
+    Route::delete('/unit-types/{unitType}', [UnitTypeController::class, 'destroy']);
+    Route::post('/units', [UnitController::class, 'store']);
+    Route::delete('/units/{unit}', [UnitController::class, 'destroy']);
 });

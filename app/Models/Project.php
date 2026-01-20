@@ -46,4 +46,19 @@ class Project extends Model
     {
         return $this->hasMany(ProjectInterest::class);
     }
+
+    public function unitTypes()
+    {
+        return $this->hasMany(UnitType::class);
+    }
+
+    public function units()
+    {
+        return $this->hasManyThrough(
+            Unit::class,
+            UnitType::class,
+            'project_id',
+            'unit_type_id'
+        );
+    }
 }

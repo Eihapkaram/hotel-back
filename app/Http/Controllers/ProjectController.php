@@ -10,7 +10,8 @@ class ProjectController extends Controller
 {
     public function index()
     {
-        $projects = Project::with(['images', 'features', 'warranties', 'locationDetail', 'interests'])->get();
+        $projects = Project::with(['images', 'features', 'warranties', 'locationDetail', 'interests', 'unitTypes.units'])->withCount('units') // 🔥 عدد الوحدات
+            ->get();
 
         $projects->transform(function ($project) {
             // Main image via Route
@@ -64,7 +65,7 @@ class ProjectController extends Controller
 
     public function show(Project $project)
     {
-        $project->load(['images', 'features', 'warranties', 'locationDetail', 'interests']);
+        $project->load(['images', 'features', 'warranties', 'locationDetail', 'interests', 'unitTypes.units']);
 
         $project->main_image_url = $project->main_image
             ? url('api/'.$project->main_image)

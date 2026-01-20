@@ -29,7 +29,7 @@ class ProjectLocationsController extends Controller
             'city' => 'required|string|max:255',
             'district' => 'nullable|string|max:255',
             'address' => 'nullable|string|max:500',
-            'map_link' => 'nullable|url|max:500',
+            'map_link' => 'nullable|string',
         ]);
 
         if ($validator->fails()) {
@@ -59,7 +59,7 @@ class ProjectLocationsController extends Controller
             'city' => 'sometimes|required|string|max:255',
             'district' => 'nullable|string|max:255',
             'address' => 'nullable|string|max:500',
-            'map_link' => 'nullable|url|max:500',
+            'map_link' => 'nullable|string',
         ]);
 
         if ($validator->fails()) {
