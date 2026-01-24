@@ -10,23 +10,19 @@ class ProjectController extends Controller
 {
     public function index()
     {
-        $projects = Project::with(['images', 'features', 'warranties', 'locationDetail', 'interests', 'unitTypes.units'])->withCount('units') // 🔥 عدد الوحدات
+        $projects = Project::query()
+            ->select('id', 'title', 'location', 'status', 'main_image', 'area', 'date')
+            ->with([
+                'features:id,project_id,feature,image',
+            ])
+            ->withCount('units')
+            ->latest()
             ->get();
 
-        $projects->transform(function ($project) {
-            // Main image via Route
+        $projects->each(function ($project) {
             $project->main_image_url = $project->main_image
                 ? url('api/'.$project->main_image)
                 : null;
-
-            // Sub-images via Route
-            $project->images->transform(function ($img) {
-                $img->url = $img->image ? url('api/project-images/files/'.$img->image) : null;
-
-                return $img;
-            });
-
-            return $project;
         });
 
         return response()->json($projects);
@@ -65,16 +61,21 @@ class ProjectController extends Controller
 
     public function show(Project $project)
     {
-        $project->load(['images', 'features', 'warranties', 'locationDetail', 'interests', 'unitTypes.units']);
+        $project->load([
+            'images:id,project_id,image',
+            'features:id,project_id,feature,image',
+            'locationDetail',
+            'unitTypes:id,project_id,name,floor',
+        ])->loadCount('units');
 
         $project->main_image_url = $project->main_image
             ? url('api/'.$project->main_image)
             : null;
 
-        $project->images->transform(function ($img) {
-            $img->url = $img->image ? url('api/project-images/files/'.$img->image) : null;
-
-            return $img;
+        $project->images->each(function ($img) {
+            $img->url = $img->image
+                ? url('api/project-images/files/'.$img->image)
+                : null;
         });
 
         return response()->json($project);

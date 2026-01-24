@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\GeneralInterestController;
 use App\Http\Controllers\MaintenanceRequestController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProjectFeaturesController;
@@ -59,8 +60,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/projects', [ProjectController::class, 'index']);
 Route::get('/project/{project}', [ProjectController::class, 'show']);
 
-Route::get('/maintenance-requests', [MaintenanceRequestController::class, 'index']);
-Route::get('/maintenance-requests/{maintenanceRequest}', [MaintenanceRequestController::class, 'show']);
+Route::post('/maintenance-requests', [MaintenanceRequestController::class, 'store']);
 
 Route::get('/project-images', [ProjectImagesController::class, 'index']);
 Route::get('/project-images/{projectImage}', [ProjectImagesController::class, 'show']);
@@ -74,8 +74,15 @@ Route::get('/project-warranties/{projectWarranty}', [ProjectWarrantysController:
 Route::get('/project-locations', [ProjectLocationsController::class, 'index']);
 Route::get('/project-locations/{projectLocation}', [ProjectLocationsController::class, 'show']);
 
-Route::get('/project-interests', [ProjectInterestsController::class, 'index']);
+Route::post('/project-interest', [ProjectInterestsController::class, 'store']);
+Route::post('/project-interests', [ProjectInterestsController::class, 'store']);
 Route::get('/project-interests/{projectInterest}', [ProjectInterestsController::class, 'show']);
+Route::get('unit-types/{unitType}/units', [UnitController::class, 'byType']);
+
+Route::post('general-interests', [GeneralInterestController::class, 'store']);
+Route::get('general-interests/{id}', [GeneralInterestController::class, 'show']);
+Route::put('general-interests/{id}', [GeneralInterestController::class, 'update']);
+Route::delete('general-interests/{id}', [GeneralInterestController::class, 'destroy']);
 
 // -------------------------
 // Protected Routes (إنشاء، تعديل، حذف) - Passport
@@ -92,7 +99,7 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('/projects/{project}', [ProjectController::class, 'destroy']);
 
     // Maintenance Requests
-    Route::post('/maintenance-requests', [MaintenanceRequestController::class, 'store']);
+
     Route::put('/maintenance-requests/{maintenanceRequest}', [MaintenanceRequestController::class, 'update']);
     Route::patch('/maintenance-requests/{maintenanceRequest}', [MaintenanceRequestController::class, 'update']);
     Route::delete('/maintenance-requests/{maintenanceRequest}', [MaintenanceRequestController::class, 'destroy']);
@@ -122,7 +129,7 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('/project-locations/{projectLocation}', [ProjectLocationsController::class, 'destroy']);
 
     // Project Interests
-    Route::post('/project-interests', [ProjectInterestsController::class, 'store']);
+
     Route::put('/project-interests/{projectInterest}', [ProjectInterestsController::class, 'update']);
     Route::patch('/project-interests/{projectInterest}', [ProjectInterestsController::class, 'update']);
     Route::delete('/project-interests/{projectInterest}', [ProjectInterestsController::class, 'destroy']);
@@ -132,4 +139,9 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('/unit-types/{unitType}', [UnitTypeController::class, 'destroy']);
     Route::post('/units', [UnitController::class, 'store']);
     Route::delete('/units/{unit}', [UnitController::class, 'destroy']);
+    // show interestes
+    Route::get('general-interests', [GeneralInterestController::class, 'index']);
+    Route::get('/project-interests', [ProjectInterestsController::class, 'index']);
+    Route::get('/maintenance-requests', [MaintenanceRequestController::class, 'index']);
+    Route::get('/maintenance-requests/{maintenanceRequest}', [MaintenanceRequestController::class, 'show']);
 });

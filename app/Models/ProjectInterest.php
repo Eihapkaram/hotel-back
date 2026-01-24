@@ -9,10 +9,15 @@ class ProjectInterest extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['project_id', 'name', 'phone', 'email', 'purchase_type', 'purpose'];
+    protected $fillable = ['project_id', 'name', 'phone', 'email', 'purchase_type', 'purpose', 'unit_id'];
 
     public function project()
     {
         return $this->belongsTo(Project::class);
+    }
+
+    public function unit()
+    {
+        return $this->belongsTo(Unit::class);
     }
 }

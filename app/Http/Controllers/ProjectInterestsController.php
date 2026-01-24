@@ -14,7 +14,17 @@ class ProjectInterestsController extends Controller
 
     public function store(Request $request)
     {
-        $interest = ProjectInterest::create($request->all());
+        $data = $request->validate([
+            'project_id' => 'required|exists:projects,id',
+            'unit_id' => 'nullable|exists:units,id',
+            'name' => 'required|string',
+            'phone' => 'required|string',
+            'email' => 'nullable|email',
+            'purchase_type' => 'nullable|string',
+            'purpose' => 'nullable|string',
+        ]);
+
+        $interest = ProjectInterest::create($data);
 
         return response()->json($interest, 201);
     }

@@ -15,10 +15,17 @@ class Unit extends Model
         'price',
         'status',
         'title', // 👈 جديد
+        'description',
+        'floor',
     ];
 
     public function unitType()
     {
         return $this->belongsTo(UnitType::class);
     }
+    public function interests()
+{
+    return $this->hasMany(ProjectInterest::class);
+}
+
 }
