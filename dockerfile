@@ -1,80 +1,36 @@
-FROM php:8.2-fpm
+# Dockerfile for Laravel 12 API
+FROM php:8.3-cli
 
-# ===============================
-# System packages
-# ===============================
+# تثبيت Dependencies
 RUN apt-get update && apt-get install -y \
-    nginx \
-    git \
-    unzip \
-    curl \
-    libpng-dev \
-    libonig-dev \
-    libxml2-dev \
-    libzip-dev \
-    && docker-php-ext-install \
-        pdo \
-        pdo_mysql \
-        mbstring \
-        bcmath \
-        gd \
-        zip \
-    && apt-get clean
+    git unzip libzip-dev libpng-dev libonig-dev \
+    && docker-php-ext-install pdo pdo_mysql zip
 
-# ===============================
-# Composer
-# ===============================
+# تثبيت Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# ===============================
-# App directory
-# ===============================
-WORKDIR /var/www
+# تحديد مجلد العمل
+WORKDIR /app
 
-# ===============================
-# Copy project
-# ===============================
+# نسخ المشروع
 COPY . .
 
-# ===============================
-# Install dependencies
-# ===============================
+# تثبيت dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# ===============================
-# Permissions
-# ===============================
-RUN chown -R www-data:www-data /var/www \
-    && chmod -R 775 storage bootstrap/cache
+# إنشاء المجلدات المطلوبة (تأكد انها موجودة)
+RUN mkdir -p storage/framework/cache storage/framework/sessions storage/framework/views bootstrap/cache
 
-# ===============================
-# NGINX CONFIG (INLINE)
-# ===============================
-RUN rm /etc/nginx/sites-enabled/default && \
-echo 'events {} \
-http { \
-  server { \
-    listen 8080; \
-    root /var/www/public; \
-    index index.php index.html; \
-    location / { \
-      try_files $uri $uri/ /index.php?$query_string; \
-    } \
-    location ~ \.php$ { \
-      fastcgi_pass 127.0.0.1:9000; \
-      fastcgi_index index.php; \
-      include fastcgi_params; \
-      fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name; \
-    } \
-  } \
-}' > /etc/nginx/nginx.conf
+# تعديل الصلاحيات (Docker/Linux)
+RUN chmod -R 777 storage bootstrap/cache
 
-# ===============================
-# Railway port
-# ===============================
+# تنظيف أي كاش
+RUN php artisan config:clear \
+ && php artisan view:clear \
+ && php artisan route:clear
+
+# تعيين البورت
 EXPOSE 8080
 
-# ===============================
-# Start PHP-FPM + NGINX
-# ===============================
-CMD sh -c "php-fpm -D && nginx -g 'daemon off;'"
+# تشغيل Laravel
+CMD php -S 0.0.0.0:8080 -t public
